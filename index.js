@@ -6,14 +6,14 @@ const { logErrors, errorHandler,boomErrorHandler } = require('./middlewares/erro
 
 
 const app = express();
-const port = 3007;
+const port = process.env.PORT || 3007;
 
 app.use(express.json());
 
 const whitelist = ['http://localhost:5500'];
 const options = {
   origin: (origin, callback) => {
-    if (whitelist.includes(origin)) {
+    if (whitelist.includes(origin) || !origin) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -22,7 +22,7 @@ const options = {
   }
 }
 
-app.use(cors());
+app.use(cors(options));
 
 app.get('/', (req, res) => {
   res.send('Hello World!, my first server at express');
