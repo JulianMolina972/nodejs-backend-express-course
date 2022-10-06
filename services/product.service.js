@@ -32,9 +32,13 @@ class ProductsService {
 
   find() {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(this.products);
-      }, 3000);
+      try {
+        setTimeout(() => {
+          resolve(this.products);
+        }, 3000);
+      } catch (error) {
+        reject(error);
+      }
     })
   }
 
